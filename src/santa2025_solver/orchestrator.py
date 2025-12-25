@@ -88,8 +88,7 @@ class Orchestrator:
             seed=seed,
             stage=stage,
             time_budget_sec=time_budget,
-            initial_layouts=initial_layouts if hasattr(arena.run_trial, '__code__') and 
-                           'initial_layouts' in arena.run_trial.__code__.co_varnames else None
+            initial_layouts=initial_layouts
         )
         
         result['arena'] = arena_name

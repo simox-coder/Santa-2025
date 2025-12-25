@@ -133,7 +133,8 @@ class LatticeArena:
         return None
     
     def run_trial(self, hparams: Dict[str, Any], seed: int,
-                  stage: int, time_budget_sec: float) -> Dict[str, Any]:
+                  stage: int, time_budget_sec: float,
+                  initial_layouts: Dict[int, np.ndarray] = None) -> Dict[str, Any]:
         """Run a trial with given hyperparameters."""
         import time
         
