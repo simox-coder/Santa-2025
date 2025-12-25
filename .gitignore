@@ -39,9 +39,12 @@ Thumbs.db
 
 # Project specific
 runs/
-artifacts/*.csv
-artifacts/*.txt
-artifacts/*.md
-artifacts/*.yaml
-artifacts/*.json
-!artifacts/.gitkeep
+
+# Allow required artifacts
+!submission_best.csv
+!artifacts/submission_best.csv
+!artifacts/score.txt
+!artifacts/dashboard.md
+!artifacts/best_config.yaml
+!artifacts/calibration_report.md
+!artifacts/gates.md
