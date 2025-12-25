@@ -1,0 +1,34 @@
+# Core dependencies
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=1.5.0
+
+# Acceleration (optional but recommended)
+numba>=0.57.0
+
+# Geometry (for reference tests only, not hot loop)
+shapely>=2.0.0
+
+# CLI & progress
+tqdm>=4.65.0
+rich>=13.0.0
+click>=8.0.0
+
+# Configuration
+pyyaml>=6.0
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Visualization (optional)
+matplotlib>=3.7.0
+
+# Serialization (optional)
+orjson>=3.8.0
+
+# Parallelism (optional)
+joblib>=1.2.0
+
+# Kaggle API
+kaggle>=1.5.0

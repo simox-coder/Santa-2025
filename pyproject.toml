@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "santa2025_solver"
+version = "0.1.0"
+description = "Solver for Kaggle Santa 2025 Christmas Tree Packing Challenge"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pandas>=1.5.0",
+    "numba>=0.57.0",
+    "shapely>=2.0.0",
+    "tqdm>=4.65.0",
+    "rich>=13.0.0",
+    "click>=8.0.0",
+    "pyyaml>=6.0",
+    "pytest>=7.0.0",
+    "matplotlib>=3.7.0",
+    "orjson>=3.8.0",
+    "joblib>=1.2.0",
+    "kaggle>=1.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-cov>=4.0.0",
+]
+
+[project.scripts]
+santa2025 = "santa2025_solver.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["santa2025_solver*"]
