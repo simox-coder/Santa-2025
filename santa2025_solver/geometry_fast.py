@@ -7,7 +7,6 @@ All operations use float64 for precision.
 
 import numpy as np
 from typing import Tuple, Optional
-import warnings
 
 # Try to import numba for JIT compilation
 try:

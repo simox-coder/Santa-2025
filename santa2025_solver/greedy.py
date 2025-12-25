@@ -55,25 +55,22 @@ def generate_candidate_positions(
     # Tree approximate size
     tree_size = 1.0
     
-    # Strategy 1: Around existing trees
-    for i in range(min(layout.n, 10)):  # Sample up to 10 existing trees
+    # Strategy 1: Around a few existing trees (limit to 3 for speed)
+    sample_trees = min(layout.n, 3)
+    for i in range(sample_trees):
         tx, ty, _ = layout.get_tree(i)
         
-        # Generate offset positions
+        # Generate offset positions (fewer for speed)
         offsets = [
             (tree_size, 0), (-tree_size, 0),
             (0, tree_size), (0, -tree_size),
-            (tree_size * 0.7, tree_size * 0.7),
-            (-tree_size * 0.7, tree_size * 0.7),
-            (tree_size * 0.7, -tree_size * 0.7),
-            (-tree_size * 0.7, -tree_size * 0.7),
         ]
         
         for dx, dy in offsets:
-            for deg in rotations:
-                candidates.append((tx + dx, ty + dy, deg))
+            deg = rng.choice(rotations)
+            candidates.append((tx + dx, ty + dy, deg))
     
-    # Strategy 2: Around boundary
+    # Strategy 2: Around boundary (just 4 corners)
     boundary_positions = [
         (max_x + tree_size * 0.5, (min_y + max_y) / 2),
         (min_x - tree_size * 0.5, (min_y + max_y) / 2),
@@ -82,16 +79,17 @@ def generate_candidate_positions(
     ]
     
     for bx, by in boundary_positions:
-        for deg in rotations:
-            candidates.append((bx, by, deg))
+        deg = rng.choice(rotations)
+        candidates.append((bx, by, deg))
     
-    # Strategy 3: Random positions
+    # Strategy 3: Random positions to fill remaining
     range_x = max_x - min_x + 2 * tree_size
     range_y = max_y - min_y + 2 * tree_size
     center_x = (min_x + max_x) / 2
     center_y = (min_y + max_y) / 2
     
-    for _ in range(num_candidates - len(candidates)):
+    remaining = num_candidates - len(candidates)
+    for _ in range(remaining):
         x = center_x + rng.uniform(-range_x, range_x)
         y = center_y + rng.uniform(-range_y, range_y)
         deg = rng.choice(rotations)

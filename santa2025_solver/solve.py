@@ -26,10 +26,10 @@ def main():
         with open(config_path) as f:
             config = yaml.safe_load(f)
     else:
-        print("No best config found, using default")
+        print("No best config found, using default greedy")
         config = {
             'family_id': 'F0',
-            'hyperparams': {'num_candidates': 300},
+            'hyperparams': {'num_candidates': 50},  # Faster default
             'seed': 42
         }
     

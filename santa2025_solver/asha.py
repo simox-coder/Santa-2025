@@ -116,9 +116,19 @@ class ASHAScheduler:
         trial.results.append(result)
         self.results_by_rung[result.rung].append(result)
         
-        # Log to file
+        # Log to file - convert numpy types for JSON serialization
+        result_dict = asdict(result)
+        # Convert any numpy types to native Python types
+        for key, value in result_dict.items():
+            if hasattr(value, 'item'):  # numpy scalar
+                result_dict[key] = value.item()
+            elif isinstance(value, dict):
+                for k, v in value.items():
+                    if hasattr(v, 'item'):
+                        value[k] = v.item()
+        
         with open(self.log_file, 'a') as f:
-            f.write(json.dumps(asdict(result)) + '\n')
+            f.write(json.dumps(result_dict) + '\n')
     
     def get_trials_to_promote(self, rung: int) -> List[Trial]:
         """
