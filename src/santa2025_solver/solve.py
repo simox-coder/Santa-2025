@@ -30,13 +30,15 @@ def load_config(config_path: str = None) -> dict:
 
 
 def solve_main(config_path: str = None, output_dir: str = "artifacts",
-               export_dir: str = "exports", max_n: int = 200):
+               export_dir: str = "exports", max_n: int = 200,
+               use_sample: bool = True):
     """Main solve function.
     
     Args:
         config_path: Path to config YAML (optional)
         output_dir: Directory for artifacts
         max_n: Maximum n to solve
+        use_sample: Start from sample submission if available
     """
     print("=" * 60)
     print("Santa 2025 Solver")
@@ -47,12 +49,12 @@ def solve_main(config_path: str = None, output_dir: str = "artifacts",
     
     solver_config = SolverConfig(
         seed=config_dict.get('seed', 42),
-        max_iterations=config_dict.get('max_iterations', 5000),
+        max_iterations=config_dict.get('max_iterations', 500),
         temperature_init=config_dict.get('temperature_init', 1.0),
-        cooling_rate=config_dict.get('cooling_rate', 0.995),
+        cooling_rate=config_dict.get('cooling_rate', 0.99),
         move_step=config_dict.get('move_step', 0.05),
         rotation_step=config_dict.get('rotation_step', 15.0),
-        num_candidates=config_dict.get('num_candidates', 36),
+        num_candidates=config_dict.get('num_candidates', 24),
         verbose=True
     )
     
@@ -62,9 +64,36 @@ def solve_main(config_path: str = None, output_dir: str = "artifacts",
     
     start_time = time.time()
     
-    # Solve all n
-    print(f"\nSolving for n=1 to {max_n}...")
-    solutions = solve_all_n(max_n, solver_config, verbose=True)
+    # Try to load from sample submission first
+    sample_path = Path("sample_submission.csv")
+    if use_sample and sample_path.exists():
+        print(f"\nLoading initial layouts from sample_submission.csv...")
+        from santa2025_solver.submission import layouts_from_submission
+        solutions = layouts_from_submission(str(sample_path))
+        print(f"Loaded {len(solutions)} layouts")
+        
+        # Refine solutions with SA
+        print("\nRefining solutions with SA...")
+        from santa2025_solver.solvers import solve_sa
+        for n in range(1, min(max_n + 1, 51)):  # Refine first 50
+            if n in solutions:
+                initial = solutions[n]
+                config = SolverConfig(
+                    seed=42 + n,
+                    max_iterations=200 * n,  # More iterations for larger n
+                    temperature_init=0.5,
+                    cooling_rate=0.995,
+                    move_step=0.03
+                )
+                refined = solve_sa(n, initial, config)
+                if refined.get_radius() < initial.get_radius() and not refined.has_collision():
+                    solutions[n] = refined
+                    if n % 10 == 0:
+                        print(f"  n={n}: improved {initial.get_radius():.4f} -> {refined.get_radius():.4f}")
+    else:
+        # Solve from scratch
+        print(f"\nSolving for n=1 to {max_n}...")
+        solutions = solve_all_n(max_n, solver_config, verbose=True)
     
     # Validate and repair
     print("\nValidating and repairing solutions...")
