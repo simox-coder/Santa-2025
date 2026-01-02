@@ -1,0 +1,78 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Data and artifacts (downloaded/generated)
+data/raw/*.zip
+data/raw/*.csv
+external/kaggle_metric/*.ipynb
+external/kaggle_metric/*.py
+external/kaggle_getting_started/*.ipynb
+external/kaggle_getting_started/*.py
+artifacts/*.csv
+artifacts/*.json
+artifacts/*.txt
+artifacts/*.yaml
+artifacts/*.md
+runs/*.jsonl
+
+# Keep directory structure
+!data/raw/.gitkeep
+!external/kaggle_metric/.gitkeep
+!external/kaggle_getting_started/.gitkeep
+!artifacts/.gitkeep
+!runs/.gitkeep
+
+# C++ build artifacts
+cpp/build/
+cpp/*.so
+cpp/*.dylib
+cpp/*.pyd
+*.o
+*.obj
+CMakeCache.txt
+CMakeFiles/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

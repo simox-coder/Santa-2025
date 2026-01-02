@@ -1,0 +1,43 @@
+# Santa 2025 Solver - Dependencies
+# Core
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+
+# JIT compilation
+numba>=0.57.0
+
+# Geometry (for reference tests only, not in hot loop)
+shapely>=2.0.0
+
+# Progress and display
+tqdm>=4.65.0
+rich>=13.0.0
+
+# Configuration
+pyyaml>=6.0
+
+# Testing
+pytest>=7.3.0
+
+# Visualization (optional)
+matplotlib>=3.7.0
+
+# Fast JSON (optional)
+orjson>=3.8.0
+
+# Parallelization (optional)
+joblib>=1.2.0
+
+# System info for worker auto-sizing
+psutil>=5.9.0
+
+# Kaggle API
+kaggle>=1.5.0
+
+# Notebook conversion
+nbconvert>=7.0.0
+jupyter>=1.0.0
+
+# For C++ extension building (optional)
+pybind11>=2.10.0
