@@ -1,0 +1,5 @@
+family: baseline
+seed: 42
+max_iterations: 0
+score: 853.661929
+note: Using provided sample submission as baseline
